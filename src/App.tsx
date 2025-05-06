@@ -1,8 +1,10 @@
 import "./App.css";
 import { useCounterStore } from "./store";
 import { useQuery } from "@tanstack/react-query";
+import { About } from "./pages/About";
+import { Link, Route, Routes } from "react-router-dom";
 
-function App() {
+function Home() {
   // Zustand store
   const { count, increment, decrement } = useCounterStore();
 
@@ -32,7 +34,18 @@ function App() {
           <p>Completed: {data.completed ? "Yes" : "No"}</p>
         </div>
       )}
+      {/* React Router Test */}
+      <Link to="/about">Go to About</Link>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+    </Routes>
   );
 }
 
