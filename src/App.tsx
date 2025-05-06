@@ -1,4 +1,3 @@
-import "./App.css";
 import { useCounterStore } from "./store";
 import { useQuery } from "@tanstack/react-query";
 import { About } from "./pages/About";
@@ -40,7 +39,7 @@ function Home() {
   );
 }
 
-function App() {
+export function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -48,5 +47,3 @@ function App() {
     </Routes>
   );
 }
-
-export default App;
