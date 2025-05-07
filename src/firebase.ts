@@ -4,13 +4,13 @@ import { type FirebaseOptions } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig: FirebaseOptions = {
-  apiKey: "AIzaSyBT0354RJyo9XLaSsvaacqNixOE1RcRXnQ",
-  authDomain: "tracker-7a679.firebaseapp.com",
-  projectId: "tracker-7a679",
-  storageBucket: "tracker-7a679.firebasestorage.app",
-  messagingSenderId: "469892355374",
-  appId: "1:469892355374:web:7decaded7eb811ccf156bf",
-  measurementId: "G-8XG40DRK58",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
