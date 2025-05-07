@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { type FirebaseOptions } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: "AIzaSyBT0354RJyo9XLaSsvaacqNixOE1RcRXnQ",
   authDomain: "tracker-7a679.firebaseapp.com",
   projectId: "tracker-7a679",

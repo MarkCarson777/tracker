@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useCounterStore } from "../../store";
 import { Link } from "react-router-dom";
 
-export function Home() {
+export function HomePage() {
   // Zustand store
   const { count, increment, decrement } = useCounterStore();
 
