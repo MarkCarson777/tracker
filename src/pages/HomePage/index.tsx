@@ -33,7 +33,7 @@ export function HomePage() {
         </div>
       )}
       {/* React Router Test */}
-      <Link to="/addWorkout">Go to add workout</Link>
+      <Link to="/logWorkout">Go to log workout</Link>
     </div>
   );
 }
