@@ -1,3 +1,10 @@
+import { Button } from "../../components/Button";
+
 export function AddWorkoutPage() {
-  return <span>Add Workout Page</span>;
+  return (
+    <div>
+      <p>Add Workout Page</p>
+      <Button onClick={() => console.log("addWorkout")}>Save workout</Button>
+    </div>
+  );
 }
