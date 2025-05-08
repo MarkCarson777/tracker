@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../../components/Button";
 import { type Exercise, type Weights } from "../../types/workout";
+import { ExerciseForm } from "../../components/ExerciseForm";
 
 export const LogWorkoutPage: React.FC = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -10,8 +11,7 @@ export const LogWorkoutPage: React.FC = () => {
     const newExercise: Weights = {
       type: "weights",
       name: "",
-      sets: [{ reps: 0, weight: 0, failure: false }],
-      notes: "",
+      sets: [{ reps: 0, weight: 0, restTime: 0, failure: false }],
     };
 
     setExercises([...exercises, newExercise]);
@@ -25,6 +25,17 @@ export const LogWorkoutPage: React.FC = () => {
     console.log("Workout saved", { exercises, workoutNotes });
   };
 
+  const onUpdateExercise = (index: number, updatedExercise: Exercise) => {
+    const newExercises = [...exercises];
+    newExercises[index] = updatedExercise;
+    setExercises(newExercises);
+  };
+
+  const onRemoveExercise = (index: number) => {
+    const newExercises = exercises.filter((_, i) => i !== index);
+    setExercises(newExercises);
+  };
+
   return (
     <div>
       <p>Log Workout</p>
@@ -33,10 +44,13 @@ export const LogWorkoutPage: React.FC = () => {
         <label htmlFor="exercises">Exercises</label>
         {exercises.map((exercise, index) => {
           return (
-            <div key={index}>
-              <p>Exercise {index + 1}</p>
-              <span>{exercise.type}</span>
-            </div>
+            <ExerciseForm
+              key={index}
+              exercise={exercise}
+              index={index}
+              onUpdateExercise={onUpdateExercise}
+              onRemoveExercise={onRemoveExercise}
+            />
           );
         })}
       </div>
