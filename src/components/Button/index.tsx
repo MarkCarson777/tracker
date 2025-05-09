@@ -1,21 +1,23 @@
+import { type Children, type Style } from "../../types/props";
 import { cn } from "../../utils/cn";
 
-interface ButtonProps {
-  children: React.ReactNode;
-  className?: string;
-  onClick: () => void;
-}
+interface Props
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    Children,
+    Style {}
 
-export function Button({ children, className, onClick }: ButtonProps) {
+const Button: React.FC<Props> = ({ children, className, ...props }) => {
   return (
     <button
+      {...props}
       className={cn(
         "bg-blue-500 text-white font-semibold py-2 px-4 rounded",
         className
       )}
-      onClick={onClick}
     >
       {children}
     </button>
   );
-}
+};
+
+export { Button };

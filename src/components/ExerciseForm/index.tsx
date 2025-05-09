@@ -1,20 +1,28 @@
+import { type Style } from "../../types/props";
 import { type Exercise, type Set } from "../../types/workout";
+import { cn } from "../../utils/cn";
 import { Button } from "../Button";
+import { Input } from "../Input";
 
-interface ExerciseFormProps {
+interface Props extends Style {
+  // The exercise object that contains the details of the exercise
   exercise: Exercise;
+  // The index of the exercise in the list
   index: number;
+  // Function to update the exercise in the parent component
   onUpdateExercise: (index: number, updatedExercise: Exercise) => void;
+  // Function to remove the exercise from the parent component
   onRemoveExercise: (index: number) => void;
 }
 
-export function ExerciseForm({
+const ExerciseForm: React.FC<Props> = ({
   exercise,
   index,
   onUpdateExercise,
   onRemoveExercise,
-}: ExerciseFormProps) {
-  // Handle input changes for the exercise form
+  className,
+}) => {
+  // Handle Input changes for the exercise form
   const onChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -23,14 +31,14 @@ export function ExerciseForm({
     const { name, value, type } = event.target;
     let updatedValue;
 
-    // Handle the case where the input is a checkbox
+    // Handle the case where the Input is a checkbox
     if (type === "checkbox" && event.target instanceof HTMLInputElement) {
       updatedValue = event.target.checked;
     } else {
       updatedValue = value;
     }
 
-    // Update the exercise object with the new value using the name of the input
+    // Update the exercise object with the new value using the name of the Input
     onUpdateExercise(index, { ...exercise, [name]: updatedValue });
   };
 
@@ -72,16 +80,16 @@ export function ExerciseForm({
 
   // Handle updating individual sets for weights exercises
   const onUpdateSet = (
-    setIndex: Number,
+    setIndex: number,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (exercise.type === "weights") {
       // Get the name, value, type, and checked properties from the event target
       const { name, value, type, checked } = event.target;
-      // Create a new value based on the type of input
+      // Create a new value based on the type of Input
       const newValue = type === "checkbox" ? checked : value;
-      // Update the set object with the new value using the name of the input
-      const newSets = exercise.sets.map((set: Set, i: Number) =>
+      // Update the set object with the new value using the name of the Input
+      const newSets = exercise.sets.map((set: Set, i: number) =>
         i === setIndex ? { ...set, [name]: newValue } : set
       );
 
@@ -91,10 +99,12 @@ export function ExerciseForm({
   };
 
   return (
-    <div className="space-y-4">
+    <div
+      className={cn("bg-blue-200 border border-red-500 p-3 rounded", className)}
+    >
       <div className="flex flex-col">
         <label htmlFor={`exerciseName-${index}`}>Name</label>
-        <input
+        <Input
           id={`exerciseName-${index}`}
           name="name"
           value={exercise.name}
@@ -122,18 +132,18 @@ export function ExerciseForm({
               <div key={setIndex} className="flex">
                 <div className="flex flex-col">
                   <label htmlFor={`weight-${index}`}>Weight</label>
-                  <input
+                  <Input
                     id={`weight-${index}`}
                     type="number"
                     className="border"
                     name="weight"
-                    value={set.weight}
+                    value={String(set.weight)}
                     onChange={(e) => onUpdateSet(setIndex, e)}
                   />
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor={`reps-${index}`}>Reps</label>
-                  <input
+                  <Input
                     id={`reps-${index}`}
                     type="number"
                     className="border"
@@ -144,7 +154,7 @@ export function ExerciseForm({
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor={`restTime-${index}`}>Rest Time</label>
-                  <input
+                  <Input
                     id={`restTime-${index}`}
                     type="number"
                     className="border"
@@ -155,7 +165,7 @@ export function ExerciseForm({
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor={`failure-${index}`}>Failure</label>
-                  <input
+                  <Input
                     id={`failure-${index}`}
                     type="checkbox"
                     name="failure"
@@ -178,7 +188,7 @@ export function ExerciseForm({
         <div className="flex">
           <div className="flex flex-col">
             <label htmlFor={`distance-${index}`}>Distance</label>
-            <input
+            <Input
               id={`distance-${index}`}
               type="number"
               className="border"
@@ -189,7 +199,7 @@ export function ExerciseForm({
           </div>
           <div className="flex flex-col">
             <label htmlFor={`duration-${index}`}>Duration</label>
-            <input
+            <Input
               id={`duration-${index}`}
               type="number"
               className="border"
@@ -203,4 +213,6 @@ export function ExerciseForm({
       <Button onClick={() => onRemoveExercise(index)}>Remove Exercise</Button>
     </div>
   );
-}
+};
+
+export { ExerciseForm };
