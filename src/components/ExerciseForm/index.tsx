@@ -3,7 +3,7 @@ import { type Exercise, type Set } from "../../types/workout";
 import { cn } from "../../utils/cn";
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
-import { Icon } from "../Icon";
+import { IconButton } from "../IconButton";
 import { Input } from "../Input";
 
 interface Props extends Style {
@@ -117,10 +117,13 @@ const ExerciseForm: React.FC<Props> = ({
         className
       )}
     >
-      <Button className="self-end" onClick={() => onRemoveExercise(index)}>
-        <Icon color="#FFFFFF" size={12} icon="Close" />
-        <span>Remove Exercise</span>
-      </Button>
+      <IconButton
+        className="self-end"
+        icon="Close"
+        size={8}
+        onClick={() => onRemoveExercise(index)}
+      />
+
       <div className="flex flex-col">
         <label htmlFor={`exerciseName-${index}`}>Name</label>
         <Input
