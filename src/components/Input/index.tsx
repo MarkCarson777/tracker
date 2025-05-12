@@ -19,7 +19,7 @@ const Input: React.FC<Props> = ({
       {...props}
       className={cn(
         // Base styles
-        "rounded border border-blue-500",
+        "rounded border border-gray-400 h-10",
         // Read only & disabled
         !readOnly && !disabled && "hover:border-blue-400",
         // Disabled

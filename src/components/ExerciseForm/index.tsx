@@ -222,7 +222,7 @@ const ExerciseForm: React.FC<Props> = ({
         </div>
       )}
       <Button onClick={() => onRemoveExercise(index)}>
-        <Icon color="#FFFFFF" size={16} icon="Trash" />
+        <Icon color="#FFFFFF" size={12} icon="Close" />
         <span>Remove Exercise</span>
       </Button>
     </div>
