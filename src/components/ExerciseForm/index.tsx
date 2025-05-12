@@ -120,7 +120,7 @@ const ExerciseForm: React.FC<Props> = ({
       <IconButton
         className="self-end"
         icon="Close"
-        size={8}
+        size={10}
         onClick={() => onRemoveExercise(index)}
       />
 
