@@ -39,7 +39,7 @@ export const LogWorkoutPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="m-10">
       <Button onClick={onAddExercise}>Add exercise</Button>
       <div className="space-y-4">
         {exercises.map((exercise, index) => {

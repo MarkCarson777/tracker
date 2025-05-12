@@ -112,8 +112,15 @@ const ExerciseForm: React.FC<Props> = ({
 
   return (
     <div
-      className={cn("bg-blue-200 border border-red-500 p-3 rounded", className)}
+      className={cn(
+        "bg-blue-200 border-4 border-blue-500 p-3 rounded flex flex-col",
+        className
+      )}
     >
+      <Button className="self-end" onClick={() => onRemoveExercise(index)}>
+        <Icon color="#FFFFFF" size={12} icon="Close" />
+        <span>Remove Exercise</span>
+      </Button>
       <div className="flex flex-col">
         <label htmlFor={`exerciseName-${index}`}>Name</label>
         <Input
@@ -141,7 +148,10 @@ const ExerciseForm: React.FC<Props> = ({
         <div>
           {exercise.sets.map((set, setIndex) => {
             return (
-              <div key={setIndex} className="flex">
+              <div
+                key={setIndex}
+                className="flex border-4 border-green-500 space-x-2"
+              >
                 <div className="flex flex-col">
                   <label htmlFor={`weight-${index}`}>Weight</label>
                   <Input
@@ -221,10 +231,6 @@ const ExerciseForm: React.FC<Props> = ({
           </div>
         </div>
       )}
-      <Button onClick={() => onRemoveExercise(index)}>
-        <Icon color="#FFFFFF" size={12} icon="Close" />
-        <span>Remove Exercise</span>
-      </Button>
     </div>
   );
 };
