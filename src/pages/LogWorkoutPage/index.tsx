@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Button } from "../../components/Button";
 import { type Exercise, type Weights } from "../../types/workout";
 import { ExerciseForm } from "../../components/ExerciseForm";
+import { addWorkout } from "../../services/workoutService";
+import { Input } from "../../components/Input";
 
 export const LogWorkoutPage: React.FC = () => {
+  const [workoutName, setWorkoutName] = useState<string>("");
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [workoutNotes, setWorkoutNotes] = useState<string>("");
 
@@ -23,8 +26,20 @@ export const LogWorkoutPage: React.FC = () => {
     setWorkoutNotes(e.target.value);
   };
 
-  const onSaveWorkout = () => {
-    console.log("Workout saved", { exercises, workoutNotes });
+  const onSaveWorkout = async () => {
+    console.log("saving");
+    try {
+      const workoutData = {
+        name: workoutName,
+        userId: "testUserId",
+        date: new Date().toISOString(),
+        exercises,
+        notes: workoutNotes,
+      };
+      await addWorkout(workoutData);
+    } catch (error) {
+      console.error("Error saving workout:", error);
+    }
   };
 
   const onUpdateExercise = (index: number, updatedExercise: Exercise) => {
@@ -39,7 +54,15 @@ export const LogWorkoutPage: React.FC = () => {
   };
 
   return (
-    <div className="m-10">
+    <div className="m-10 space-y-4">
+      <div className="flex flex-col">
+        <label htmlFor="workoutName">Workout name</label>
+        <Input
+          id="workoutName"
+          value={workoutName}
+          onChange={(e) => setWorkoutName(e.target.value)}
+        />
+      </div>
       <Button onClick={onAddExercise}>Add exercise</Button>
       <div className="space-y-4">
         {exercises.map((exercise, index) => {
