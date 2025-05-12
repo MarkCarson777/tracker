@@ -6,9 +6,13 @@ import Trash from "./icons/trash.svg?react";
 import Warning from "./icons/warning.svg?react";
 
 export interface IconProps {
+  // The name of the icon to be rendered
   icon: string;
+  // The color of the icon
   color?: string;
+  // The size of the icon in pixels
   size?: number;
+  // The key-value pairs for additional props
   [key: string]: any;
 }
 
@@ -26,6 +30,7 @@ const icons: IconComponents = {
 export function Icon({ icon, color, size, ...rest }: IconProps): ReactElement {
   const Component = icons[icon];
 
+  // If the icon is not found, log an error and return a warning icon
   if (!Component) {
     console.error(`Icon "${icon}" not found.`);
     return <Icon icon="Warning" color="#ea332e" size={16} />;
