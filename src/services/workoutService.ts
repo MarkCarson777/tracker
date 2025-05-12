@@ -8,7 +8,7 @@ import {
   deleteDoc,
   CollectionReference,
 } from "firebase/firestore";
-import { type Workout } from "../types/workout";
+import type { Workout } from "../schemas/workoutSchema";
 
 const workoutsCollection = collection(
   db,

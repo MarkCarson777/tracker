@@ -1,114 +1,45 @@
-import { type Style } from "../../types/props";
-import { type Exercise, type Set } from "../../types/workout";
-import { cn } from "../../utils/cn";
+// Components
 import { Button } from "../Button";
-import { Checkbox } from "../Checkbox";
 import { IconButton } from "../IconButton";
 import { Input } from "../Input";
+// Forms
+import {
+  useFieldArray,
+  useFormContext,
+  useWatch,
+  // useFormState,
+} from "react-hook-form";
+// Styles
+import { cn } from "../../utils/cn";
+// Types
+import { type Style } from "../../types/props";
 
 interface Props extends Style {
-  // The exercise object that contains the details of the exercise
-  exercise: Exercise;
   // The index of the exercise in the list
   index: number;
-  // Function to update the exercise in the parent component
-  onUpdateExercise: (index: number, updatedExercise: Exercise) => void;
-  // Function to remove the exercise from the parent component
+  // Function to remove the exercise from the LogWorkoutPage
   onRemoveExercise: (index: number) => void;
 }
 
 const ExerciseForm: React.FC<Props> = ({
-  exercise,
   index,
-  onUpdateExercise,
   onRemoveExercise,
   className,
 }) => {
-  // Handle Input changes for the exercise form
-  const onChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value, type } = event.target;
-    let updatedValue;
+  // Destructure form methods from useFormContext
+  const { register, control } = useFormContext();
 
-    // Handle the case where the Input is a checkbox
-    if (type === "checkbox" && event.target instanceof HTMLInputElement) {
-      updatedValue = event.target.checked;
-    } else {
-      updatedValue = value;
-    }
+  // Get the form state to check for errors
+  // const { errors } = useFormState();
 
-    // Update the exercise object with the new value using the name of the Input
-    onUpdateExercise(index, { ...exercise, [name]: updatedValue });
-  };
+  // Use useFieldArray to manage the sets for this exercise
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: `exercises.${index}.sets`,
+  });
 
-  // Handle adding sets for weights exercises
-  const onAddSet = () => {
-    if (exercise.type === "weights") {
-      // Create a new set object with default values
-      const newSet: Set = {
-        reps: 0,
-        weight: 0,
-        restTime: 0,
-        failure: false,
-      };
-
-      // Update the exercise object with the new set
-      const updatedExercise = {
-        ...exercise,
-        sets: [...exercise.sets, newSet],
-      };
-
-      // Call the onUpdateExercise function to update the exercise in the parent component
-      onUpdateExercise(index, updatedExercise);
-    }
-  };
-
-  // Handle removing sets for weights exercises
-  const onRemoveSet = () => {
-    if (exercise.type === "weights" && exercise.sets.length > 1) {
-      // Remove the last set from the sets array
-      const updatedExercise = {
-        ...exercise,
-        sets: exercise.sets.slice(0, -1),
-      };
-
-      // Call the onUpdateExercise function to update the exercise in the parent component
-      onUpdateExercise(index, updatedExercise);
-    }
-  };
-
-  // Handle updating individual sets for weights exercises
-  const onUpdateSet = (
-    setIndex: number,
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (exercise.type === "weights") {
-      // Get the name, value, type, and checked properties from the event target
-      const { name, value, type, checked } = event.target;
-      // Create a new value based on the type of Input
-      const newValue = type === "checkbox" ? checked : value;
-      // Update the set object with the new value using the name of the Input
-      const newSets = exercise.sets.map((set: Set, i: number) =>
-        i === setIndex ? { ...set, [name]: newValue } : set
-      );
-
-      // Call the onUpdateExercise function to update the exercise in the parent component
-      onUpdateExercise(index, { ...exercise, sets: newSets });
-    }
-  };
-
-  const onFailureToggle = (setIndex: number, value: boolean) => {
-    if (exercise.type === "weights") {
-      const newSets = exercise.sets.map((set: Set, i: number) =>
-        i === setIndex ? { ...set, failure: value } : set
-      );
-
-      onUpdateExercise(index, { ...exercise, sets: newSets });
-    }
-  };
+  // Watch the type of exercise to conditionally render the form fields
+  const exerciseType = useWatch({ name: `exercises.${index}.type` });
 
   return (
     <div
@@ -127,98 +58,97 @@ const ExerciseForm: React.FC<Props> = ({
       <div className="flex flex-col">
         <label htmlFor={`exerciseName-${index}`}>Name</label>
         <Input
-          id={`exerciseName-${index}`}
-          name="name"
-          value={exercise.name}
           className="border"
-          onChange={onChange}
+          id={`exerciseName-${index}`}
+          {...register(`exercises.${index}.name`)}
         />
       </div>
       <div className="flex flex-col">
         <label htmlFor={`type-${index}`}>Type</label>
         <select
-          id={`type-${index}`}
-          name="type"
           className="border"
-          value={exercise.type}
-          onChange={onChange}
+          id={`type-${index}`}
+          {...register(`exercises.${index}.type`)}
         >
           <option value="weights">Weights</option>
           <option value="cardio">Cardio</option>
         </select>
       </div>
-      {exercise.type === "weights" && (
+      {exerciseType === "weights" && (
         <div>
-          {exercise.sets.map((set, setIndex) => {
+          {fields.map((_, setIndex) => {
             return (
-              <div
-                key={setIndex}
-                className="flex border-4 border-green-500 space-x-2"
-              >
-                <div className="flex flex-col">
-                  <label htmlFor={`weight-${index}`}>Weight</label>
-                  <Input
-                    id={`weight-${index}`}
-                    type="number"
-                    className="border"
-                    name="weight"
-                    value={String(set.weight)}
-                    onChange={(e) => onUpdateSet(setIndex, e)}
-                  />
+              <div key={setIndex}>
+                <div className="flex space-x-2">
+                  <div className="flex flex-col">
+                    <label htmlFor={`weight-${index}`}>Weight</label>
+                    <Input
+                      id={`weight-${index}`}
+                      type="number"
+                      {...register(
+                        `exercises.${index}.sets.${setIndex}.weight`
+                      )}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor={`reps-${index}`}>Reps</label>
+                    <Input
+                      id={`reps-${index}`}
+                      type="number"
+                      {...register(`exercises.${index}.sets.${setIndex}.reps`)}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor={`restTime-${index}`}>Rest Time</label>
+                    <Input
+                      id={`restTime-${index}`}
+                      type="number"
+                      {...register(
+                        `exercises.${index}.sets.${setIndex}.restTime`
+                      )}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor={`failure-${index}`}>Failure</label>
+                    <input
+                      type="checkbox"
+                      {...register(
+                        `exercises.${index}.sets.${setIndex}.failure`
+                      )}
+                    />
+                  </div>
                 </div>
-                <div className="flex flex-col">
-                  <label htmlFor={`reps-${index}`}>Reps</label>
-                  <Input
-                    id={`reps-${index}`}
-                    type="number"
-                    className="border"
-                    name="reps"
-                    value={set.reps}
-                    onChange={(e) => onUpdateSet(setIndex, e)}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor={`restTime-${index}`}>Rest Time</label>
-                  <Input
-                    id={`restTime-${index}`}
-                    type="number"
-                    className="border"
-                    name="restTime"
-                    value={set.restTime}
-                    onChange={(e) => onUpdateSet(setIndex, e)}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor={`failure-${index}`}>Failure</label>
-                  <Checkbox
-                    id={`failure-${index}`}
-                    name="failure"
-                    isChecked={set.failure || false}
-                    onChange={(e) => onFailureToggle(setIndex, e)}
-                  />
-                </div>
+                {fields.length > 1 && (
+                  <Button onClick={() => remove(setIndex)}>Remove</Button>
+                )}
+                {fields.length < 6 && (
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      append({
+                        reps: 0,
+                        weight: 0,
+                        restTime: 0,
+                        failure: false,
+                      });
+                    }}
+                  >
+                    Add Set
+                  </Button>
+                )}
               </div>
             );
           })}
-          {exercise.sets.length > 1 && (
-            <Button onClick={onRemoveSet}>Remove</Button>
-          )}
-          {exercise.sets.length < 6 && (
-            <Button onClick={onAddSet}>Add Set</Button>
-          )}
         </div>
       )}
-      {exercise.type === "cardio" && (
+      {exerciseType === "cardio" && (
         <div className="flex">
           <div className="flex flex-col">
             <label htmlFor={`distance-${index}`}>Distance</label>
             <Input
               id={`distance-${index}`}
               type="number"
-              className="border"
-              name="distance"
-              value={exercise.distance || 0}
-              onChange={onChange}
+              {...register(`exercises.${index}.distance`)}
             />
           </div>
           <div className="flex flex-col">
@@ -226,10 +156,7 @@ const ExerciseForm: React.FC<Props> = ({
             <Input
               id={`duration-${index}`}
               type="number"
-              className="border"
-              name="duration"
-              value={exercise.duration || 0}
-              onChange={onChange}
+              {...register(`exercises.${index}.duration`)}
             />
           </div>
         </div>
