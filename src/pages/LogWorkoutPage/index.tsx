@@ -1,7 +1,6 @@
 // Components
 import { Button } from "../../components/Button";
 import { ExerciseForm } from "../../components/ExerciseForm";
-import { Input } from "../../components/Input";
 // Firebase
 import { addWorkout } from "../../services/workoutService";
 // Forms
@@ -29,7 +28,7 @@ export const LogWorkoutPage: React.FC = () => {
   });
 
   // Destructure form methods
-  const { handleSubmit, register, formState, control } = formMethods;
+  const { handleSubmit, formState, control } = formMethods;
 
   // Field array for exercises
   const { fields, append, remove } = useFieldArray({
