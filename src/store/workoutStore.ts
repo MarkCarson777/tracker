@@ -3,16 +3,19 @@ import { type Exercise } from "../types/workout";
 
 interface WorkoutState {
   exercises: Exercise[];
+  workoutName: string;
   workoutNotes: string;
   addExercise: (exercise: Exercise) => void;
   updateExercise: (index: number, updatedExercise: Exercise) => void;
   removeExercise: (index: number) => void;
+  setWorkoutName: (name: string) => void;
   setWorkoutNotes: (notes: string) => void;
-  resetWorkout: () => void;
+  // resetWorkout: () => void;
 }
 
 export const useWorkoutStore = create<WorkoutState>((set) => ({
   exercises: [],
+  workoutName: "",
   workoutNotes: "",
   addExercise: (exercise) =>
     set((state) => ({ exercises: [...state.exercises, exercise] })),
@@ -26,6 +29,7 @@ export const useWorkoutStore = create<WorkoutState>((set) => ({
     set((state) => ({
       exercises: state.exercises.filter((_, i) => i !== index),
     })),
+  setWorkoutName: (name) => set({ workoutName: name }),
   setWorkoutNotes: (notes) => set({ workoutNotes: notes }),
-  resetWorkout: () => set({ exercises: [], workoutNotes: "" }),
+  // resetWorkout: () => set({ exercises: [], workoutNotes: "" }),
 }));

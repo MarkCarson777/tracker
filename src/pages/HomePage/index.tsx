@@ -1,11 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCounterStore } from "../../store";
 import { Link } from "react-router-dom";
 
 export function HomePage() {
-  // Zustand store
-  const { count, increment, decrement } = useCounterStore();
-
   // React Query fetch
   const { data, isLoading, error } = useQuery({
     queryKey: ["todos"],
@@ -19,9 +15,6 @@ export function HomePage() {
 
   return (
     <div>
-      <h1>Count: {count}</h1>
-      <button onClick={increment}>Increment</button>
-      <button onClick={decrement}>Decrement</button>
       {/* React Query Data */}
       <h1>Data (React Query)</h1>
       {isLoading && <p>Loading...</p>}

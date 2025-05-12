@@ -1,25 +1,26 @@
-import { useState } from "react";
 import { Button } from "../../components/Button";
-import { type Exercise, type Weights } from "../../types/workout";
+import { type Exercise } from "../../types/workout";
 import { ExerciseForm } from "../../components/ExerciseForm";
 import { addWorkout } from "../../services/workoutService";
 import { Input } from "../../components/Input";
+import { useWorkoutStore } from "../../store/workoutStore";
 
 export const LogWorkoutPage: React.FC = () => {
-  const [workoutName, setWorkoutName] = useState<string>("");
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [workoutNotes, setWorkoutNotes] = useState<string>("");
-
-  console.log("exercises", exercises);
+  const workoutName = useWorkoutStore((state) => state.workoutName);
+  const setWorkoutName = useWorkoutStore((state) => state.setWorkoutName);
+  const exercises = useWorkoutStore((state) => state.exercises);
+  const addExercise = useWorkoutStore((state) => state.addExercise);
+  const updateExercise = useWorkoutStore((state) => state.updateExercise);
+  const removeExercise = useWorkoutStore((state) => state.removeExercise);
+  const workoutNotes = useWorkoutStore((state) => state.workoutNotes);
+  const setWorkoutNotes = useWorkoutStore((state) => state.setWorkoutNotes);
 
   const onAddExercise = () => {
-    const newExercise: Weights = {
+    addExercise({
       type: "weights",
       name: "",
       sets: [{ reps: 0, weight: 0, restTime: 0, failure: false }],
-    };
-
-    setExercises([...exercises, newExercise]);
+    });
   };
 
   const onChangeWorkoutNotes = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,7 +28,6 @@ export const LogWorkoutPage: React.FC = () => {
   };
 
   const onSaveWorkout = async () => {
-    console.log("saving");
     try {
       const workoutData = {
         name: workoutName,
@@ -43,14 +43,11 @@ export const LogWorkoutPage: React.FC = () => {
   };
 
   const onUpdateExercise = (index: number, updatedExercise: Exercise) => {
-    const newExercises = [...exercises];
-    newExercises[index] = updatedExercise;
-    setExercises(newExercises);
+    updateExercise(index, updatedExercise);
   };
 
   const onRemoveExercise = (index: number) => {
-    const newExercises = exercises.filter((_, i) => i !== index);
-    setExercises(newExercises);
+    removeExercise(index);
   };
 
   return (
