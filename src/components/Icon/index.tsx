@@ -1,5 +1,6 @@
 import type { ReactElement } from "react";
 
+import Check from "./icons/check.svg?react";
 import Trash from "./icons/trash.svg?react";
 
 export interface IconProps {
@@ -14,6 +15,7 @@ interface IconComponents {
 }
 
 const icons: IconComponents = {
+  Check,
   Trash,
 };
 

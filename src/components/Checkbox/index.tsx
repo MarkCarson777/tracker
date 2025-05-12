@@ -1,5 +1,6 @@
 import * as React from "react";
 import { cn } from "../../utils/cn";
+import { Icon } from "../Icon";
 
 interface Props
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange"> {
@@ -68,7 +69,7 @@ const Checkbox: React.FC<Props> = ({
           !isChecked ? "invisible" : undefined
         )}
       >
-        ?
+        <Icon size={16} color="#FFFFFF" icon="Check" />
       </div>
     </button>
   );
