@@ -2,6 +2,8 @@ import { type Style } from "../../types/props";
 import { type Exercise, type Set } from "../../types/workout";
 import { cn } from "../../utils/cn";
 import { Button } from "../Button";
+import { Checkbox } from "../Checkbox";
+import { Icon } from "../Icon";
 import { Input } from "../Input";
 
 interface Props extends Style {
@@ -98,6 +100,16 @@ const ExerciseForm: React.FC<Props> = ({
     }
   };
 
+  const onFailureToggle = (setIndex: number, value: boolean) => {
+    if (exercise.type === "weights") {
+      const newSets = exercise.sets.map((set: Set, i: number) =>
+        i === setIndex ? { ...set, failure: value } : set
+      );
+
+      onUpdateExercise(index, { ...exercise, sets: newSets });
+    }
+  };
+
   return (
     <div
       className={cn("bg-blue-200 border border-red-500 p-3 rounded", className)}
@@ -165,12 +177,11 @@ const ExerciseForm: React.FC<Props> = ({
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor={`failure-${index}`}>Failure</label>
-                  <Input
+                  <Checkbox
                     id={`failure-${index}`}
-                    type="checkbox"
                     name="failure"
-                    checked={set.failure || false}
-                    onChange={(e) => onUpdateSet(setIndex, e)}
+                    isChecked={set.failure || false}
+                    onChange={(e) => onFailureToggle(setIndex, e)}
                   />
                 </div>
               </div>
@@ -210,7 +221,10 @@ const ExerciseForm: React.FC<Props> = ({
           </div>
         </div>
       )}
-      <Button onClick={() => onRemoveExercise(index)}>Remove Exercise</Button>
+      <Button onClick={() => onRemoveExercise(index)}>
+        <Icon color="#FFFFFF" size={16} icon="Trash" />
+        <span>Remove Exercise</span>
+      </Button>
     </div>
   );
 };

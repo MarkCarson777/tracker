@@ -7,6 +7,8 @@ export const LogWorkoutPage: React.FC = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [workoutNotes, setWorkoutNotes] = useState<string>("");
 
+  console.log("exercises", exercises);
+
   const onAddExercise = () => {
     const newExercise: Weights = {
       type: "weights",
@@ -56,7 +58,7 @@ export const LogWorkoutPage: React.FC = () => {
         <label htmlFor="workoutNotes">Notes</label>
         <textarea
           id="workoutNotes"
-          className="border rounded w-full p-3"
+          className="border rounded flex w-full"
           value={workoutNotes}
           rows={3}
           onChange={onChangeWorkoutNotes}
