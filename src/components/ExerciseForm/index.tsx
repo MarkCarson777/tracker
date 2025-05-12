@@ -133,7 +133,7 @@ const ExerciseForm: React.FC<Props> = ({
                       });
                     }}
                   >
-                    Add Set
+                    Add set
                   </Button>
                 )}
               </div>

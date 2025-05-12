@@ -9,6 +9,7 @@ import { useForm, FormProvider, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // Types
 import { type Workout, workoutSchema } from "../../schemas/workoutSchema";
+import { FormInput } from "../../components/FormInput";
 
 export const LogWorkoutPage: React.FC = () => {
   // Form setup
@@ -72,19 +73,12 @@ export const LogWorkoutPage: React.FC = () => {
     <FormProvider {...formMethods}>
       <div className="m-10 space-y-4">
         <form onSubmit={handleSubmit(onSaveWorkout)}>
-          <div className="flex flex-col">
-            <label htmlFor="workoutName">Workout name</label>
-            <Input
-              id="workoutName"
-              placeholder="Enter a workout name..."
-              {...register("workoutName")}
-            />
-            {formState.errors.workoutName && (
-              <span className="text-xs text-red-500">
-                {formState.errors.workoutName.message}
-              </span>
-            )}
-          </div>
+          <FormInput
+            id="workoutName"
+            label="Workout name"
+            type="text"
+            placeholder="Enter a workout name..."
+          />
           <Button
             onClick={(e) => {
               e.preventDefault();
@@ -105,20 +99,16 @@ export const LogWorkoutPage: React.FC = () => {
             })}
           </div>
           <div>
-            <label htmlFor="workoutNotes">Notes</label>
-            <textarea
+            <FormInput
               id="workoutNotes"
-              className="border rounded flex w-full"
-              rows={3}
-              {...register("workoutNotes")}
+              label="Notes"
+              type="textarea"
+              placeholder="Add some notes..."
             />
-            {formState.errors.workoutNotes && (
-              <span className="text-xs text-red-500">
-                {formState.errors.workoutNotes.message}
-              </span>
-            )}
           </div>
-          <Button>Save workout</Button>
+          <Button>
+            {formState.isSubmitting ? "Saving..." : "Save workout"}
+          </Button>
         </form>
       </div>
     </FormProvider>
