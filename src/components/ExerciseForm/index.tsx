@@ -24,9 +24,6 @@ const ExerciseForm: React.FC<Props> = ({
   // Destructure form methods from useFormContext
   const { register, control } = useFormContext();
 
-  // Get the form state to check for errors
-  // const { errors } = useFormState();
-
   // Use useFieldArray to manage the sets for this exercise
   const { fields, append, remove } = useFieldArray({
     control,
@@ -68,9 +65,9 @@ const ExerciseForm: React.FC<Props> = ({
       </div>
       {exerciseType === "weights" && (
         <div>
-          {fields.map((_, setIndex) => {
+          {fields.map((set, setIndex) => {
             return (
-              <div key={setIndex}>
+              <div key={set.id}>
                 <div className="flex space-x-2">
                   <FormInput
                     type="text"

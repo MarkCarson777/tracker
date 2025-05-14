@@ -30,6 +30,8 @@ export const LogWorkoutPage: React.FC = () => {
   // Destructure form methods
   const { handleSubmit, formState, control } = formMethods;
 
+  console.log("errors", formState.errors);
+
   // Field array for exercises
   const { fields, append, remove } = useFieldArray({
     control: control,
@@ -78,10 +80,10 @@ export const LogWorkoutPage: React.FC = () => {
             placeholder="Enter a workout name..."
           />
           <div className="space-y-4">
-            {fields.map((_, index) => {
+            {fields.map((exercise, index) => {
               return (
                 <ExerciseForm
-                  key={index}
+                  key={exercise.id}
                   index={index}
                   onRemoveExercise={onRemoveExercise}
                 />
