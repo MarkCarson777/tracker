@@ -1,5 +1,7 @@
-import { cn } from "../../utils/cn";
+// Types
 import { type Style } from "../../types/props";
+// Utilities
+import { cn } from "../../utils/cn";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement>, Style {}
 

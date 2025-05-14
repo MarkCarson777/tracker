@@ -4,10 +4,10 @@ import { FormInput } from "../FormInput";
 import { IconButton } from "../IconButton";
 // Forms
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-// Styles
-import { cn } from "../../utils/cn";
 // Types
 import { type Style } from "../../types/props";
+// Utilities
+import { cn } from "../../utils/cn";
 
 interface Props extends Style {
   // The index of the exercise in the list
@@ -50,7 +50,8 @@ const ExerciseForm: React.FC<Props> = ({
         type="text"
         label="Name"
         id={`exerciseName-${index}`}
-        fieldName={`exercises.${index}.name`}
+        name={`exercises.${index}.name`}
+        placeholder="Enter an exercise name..."
       />
       <div className="flex flex-col">
         <label htmlFor={`type-${index}`}>Type</label>
@@ -70,28 +71,31 @@ const ExerciseForm: React.FC<Props> = ({
               <div key={set.id}>
                 <div className="flex space-x-2">
                   <FormInput
-                    type="text"
+                    type="number"
                     label="Weight"
                     id={`weight-${index}`}
-                    fieldName={`exercises.${index}.sets.${setIndex}.weight`}
+                    name={`exercises.${index}.sets.${setIndex}.weight`}
+                    placeholder="Weight"
                   />
                   <FormInput
-                    type="text"
+                    type="number"
                     label="Reps"
                     id={`reps-${index}`}
-                    fieldName={`exercises.${index}.sets.${setIndex}.reps`}
+                    name={`exercises.${index}.sets.${setIndex}.reps`}
+                    placeholder="Reps"
                   />
                   <FormInput
-                    type="text"
+                    type="number"
                     label="Rest time"
                     id={`restTime-${index}`}
-                    fieldName={`exercises.${index}.sets.${setIndex}.restTime`}
+                    name={`exercises.${index}.sets.${setIndex}.restTime`}
+                    placeholder="Rest"
                   />
                   <FormInput
                     type="checkbox"
                     label="Failure"
                     id={`failure-${index}`}
-                    fieldName={`exercises.${index}.sets.${setIndex}.failure`}
+                    name={`exercises.${index}.sets.${setIndex}.failure`}
                   />
                   {fields.length > 1 && (
                     <IconButton
@@ -113,9 +117,9 @@ const ExerciseForm: React.FC<Props> = ({
               onClick={(e) => {
                 e.preventDefault();
                 append({
-                  reps: 0,
-                  weight: 0,
-                  restTime: 0,
+                  reps: "",
+                  weight: "",
+                  restTime: "",
                   failure: false,
                 });
               }}
@@ -128,16 +132,16 @@ const ExerciseForm: React.FC<Props> = ({
       {exerciseType === "cardio" && (
         <div className="flex space-x-2">
           <FormInput
-            type="text"
+            type="number"
             label="Distance"
             id={`distance-${index}`}
-            fieldName={`exercises.${index}.distance`}
+            name={`exercises.${index}.distance`}
           />
           <FormInput
-            type="text"
+            type="number"
             label="Duration"
             id={`duration-${index}`}
-            fieldName={`exercises.${index}.duration`}
+            name={`exercises.${index}.duration`}
           />
         </div>
       )}

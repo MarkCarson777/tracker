@@ -1,6 +1,9 @@
-import { type Style } from "../../types/props";
-import { cn } from "../../utils/cn";
+// Components
 import { Icon } from "../Icon";
+// Types
+import { type Style } from "../../types/props";
+// Utilities
+import { cn } from "../../utils/cn";
 
 interface Props extends Style {
   // The icon to be rendered

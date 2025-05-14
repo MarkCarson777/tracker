@@ -2,10 +2,11 @@
 import { Icon } from "../Icon";
 // Forms
 import { useFormContext } from "react-hook-form";
-// Styles
+// Types
 import type { Style } from "../../types/props";
 
 interface Props extends Style {
+  // Name to be registered with react-hook-form
   name: string;
 }
 

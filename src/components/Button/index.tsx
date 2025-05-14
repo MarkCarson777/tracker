@@ -1,3 +1,4 @@
+// Types
 import { type Children, type Style } from "../../types/props";
 import { cn } from "../../utils/cn";
 

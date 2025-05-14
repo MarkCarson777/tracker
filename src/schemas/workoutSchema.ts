@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 const setSchema = z.object({
-  reps: z.string(),
-  weight: z.string(),
-  restTime: z.string(),
+  reps: z.string().min(1),
+  weight: z.string().min(1),
+  restTime: z.string().min(1),
   failure: z.boolean(),
 });
 
@@ -16,8 +16,8 @@ const exerciseSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("cardio"),
     name: z.string().min(1),
-    distance: z.string().min(0).optional(),
-    duration: z.string(),
+    distance: z.string().min(1).optional(),
+    duration: z.string().min(1),
   }),
 ]);
 

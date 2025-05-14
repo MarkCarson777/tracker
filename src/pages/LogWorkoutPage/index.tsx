@@ -20,7 +20,7 @@ export const LogWorkoutPage: React.FC = () => {
         {
           type: "weights",
           name: "",
-          sets: [{ reps: "0", weight: "0", restTime: "0", failure: false }],
+          sets: [{ reps: "", weight: "", restTime: "", failure: false }],
         },
       ],
       workoutNotes: "",
@@ -29,8 +29,6 @@ export const LogWorkoutPage: React.FC = () => {
 
   // Destructure form methods
   const { handleSubmit, formState, control } = formMethods;
-
-  console.log("errors", formState.errors);
 
   // Field array for exercises
   const { fields, append, remove } = useFieldArray({
@@ -68,13 +66,18 @@ export const LogWorkoutPage: React.FC = () => {
     remove(index);
   };
 
+  // Log any errors in the form state
+  if (Object.keys(formState.errors).length > 0) {
+    console.error("Workout submission errors", formState.errors);
+  }
+
   return (
     <FormProvider {...formMethods}>
       <div className="m-10 space-y-4">
         <form onSubmit={handleSubmit(onSaveWorkout)}>
           <FormInput
             id="workoutName"
-            fieldName="workoutName"
+            name="workoutName"
             label="Workout name"
             type="text"
             placeholder="Enter a workout name..."
@@ -101,7 +104,7 @@ export const LogWorkoutPage: React.FC = () => {
           <div>
             <FormInput
               id="workoutNotes"
-              fieldName="workoutNotes"
+              name="workoutNotes"
               label="Notes"
               type="textarea"
               placeholder="Add some notes..."
