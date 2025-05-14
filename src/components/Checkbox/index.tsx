@@ -1,6 +1,9 @@
-import { useFormContext } from "react-hook-form";
-import type { Style } from "../../types/props";
+// Components
 import { Icon } from "../Icon";
+// Forms
+import { useFormContext } from "react-hook-form";
+// Styles
+import type { Style } from "../../types/props";
 
 interface Props extends Style {
   name: string;
@@ -19,4 +22,4 @@ const Checkbox: React.FC<Props> = ({ name }) => {
   );
 };
 
-export default Checkbox;
+export { Checkbox };

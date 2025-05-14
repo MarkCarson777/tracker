@@ -1,26 +1,38 @@
 // Components
+import { Checkbox } from "../Checkbox";
 import { Input } from "../Input";
 // Forms
 import { useFormContext } from "react-hook-form";
+// Utilities
+import { get } from "lodash";
 // Styles
 import { type Style } from "../../types/props";
 
 interface Props extends Style {
   id: string;
-  label: string;
+  fieldName: string;
+  label?: string;
   type: "text" | "textarea" | "checkbox";
   placeholder?: string;
 }
 
-const FormInput: React.FC<Props> = ({ id, label, type, placeholder }) => {
+const FormInput: React.FC<Props> = ({
+  id,
+  fieldName,
+  label,
+  type,
+  placeholder,
+}) => {
   const { register, formState } = useFormContext();
   const { errors } = formState;
 
+  const error = get(errors, fieldName);
+
   return (
-    <div className="flex flex-col space-y-1">
-      <label htmlFor={id}>{label}</label>
+    <div className="flex flex-col">
+      {label && <label htmlFor={id}>{label}</label>}
       {type === "text" && (
-        <Input id={id} placeholder={placeholder} {...register(id)} />
+        <Input id={id} placeholder={placeholder} {...register(fieldName)} />
       )}
       {type === "textarea" && (
         <textarea
@@ -28,22 +40,12 @@ const FormInput: React.FC<Props> = ({ id, label, type, placeholder }) => {
           placeholder={placeholder}
           rows={3}
           className="border rounded flex w-full pl-2 pt-1"
-          {...register(id)}
+          {...register(fieldName)}
         />
       )}
-      {type === "checkbox" && (
-        <input
-          type="checkbox"
-          id={id}
-          className="border rounded flex w-full"
-          {...register(id)}
-        />
-      )}
-      {/* Display error message if there is an error for this field */}
-      {errors[id] && (
-        <span className="text-xs text-red-500">
-          {String(errors[id].message)}
-        </span>
+      {type === "checkbox" && <Checkbox {...register(fieldName)} />}
+      {error && (
+        <span className="text-xs text-red-500">{String(error.message)}</span>
       )}
     </div>
   );

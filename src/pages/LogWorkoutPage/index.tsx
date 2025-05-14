@@ -1,6 +1,7 @@
 // Components
 import { Button } from "../../components/Button";
 import { ExerciseForm } from "../../components/ExerciseForm";
+import { FormInput } from "../../components/FormInput";
 // Firebase
 import { addWorkout } from "../../services/workoutService";
 // Forms
@@ -8,7 +9,6 @@ import { useForm, FormProvider, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // Types
 import { type Workout, workoutSchema } from "../../schemas/workoutSchema";
-import { FormInput } from "../../components/FormInput";
 
 export const LogWorkoutPage: React.FC = () => {
   // Form setup
@@ -35,8 +35,6 @@ export const LogWorkoutPage: React.FC = () => {
     control: control,
     name: "exercises",
   });
-
-  console.log("errors", formState.errors);
 
   // Function to add a new exercise
   const onAddExercise = () => {
@@ -74,18 +72,11 @@ export const LogWorkoutPage: React.FC = () => {
         <form onSubmit={handleSubmit(onSaveWorkout)}>
           <FormInput
             id="workoutName"
+            fieldName="workoutName"
             label="Workout name"
             type="text"
             placeholder="Enter a workout name..."
           />
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              onAddExercise();
-            }}
-          >
-            Add exercise
-          </Button>
           <div className="space-y-4">
             {fields.map((_, index) => {
               return (
@@ -97,9 +88,18 @@ export const LogWorkoutPage: React.FC = () => {
               );
             })}
           </div>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              onAddExercise();
+            }}
+          >
+            Add exercise
+          </Button>
           <div>
             <FormInput
               id="workoutNotes"
+              fieldName="workoutNotes"
               label="Notes"
               type="textarea"
               placeholder="Add some notes..."

@@ -1,19 +1,13 @@
 // Components
 import { Button } from "../Button";
+import { FormInput } from "../FormInput";
 import { IconButton } from "../IconButton";
-import { Input } from "../Input";
 // Forms
-import {
-  useFieldArray,
-  useFormContext,
-  useWatch,
-  // useFormState,
-} from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 // Styles
 import { cn } from "../../utils/cn";
 // Types
 import { type Style } from "../../types/props";
-import Checkbox from "../Checkbox";
 
 interface Props extends Style {
   // The index of the exercise in the list
@@ -45,7 +39,7 @@ const ExerciseForm: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        "border-4 border-blue-500 p-3 rounded flex flex-col",
+        "border-2 border-blue-500 p-3 rounded flex flex-col",
         className
       )}
     >
@@ -55,15 +49,12 @@ const ExerciseForm: React.FC<Props> = ({
         size={10}
         onClick={() => onRemoveExercise(index)}
       />
-
-      <div className="flex flex-col">
-        <label htmlFor={`exerciseName-${index}`}>Name</label>
-        <Input
-          className="border"
-          id={`exerciseName-${index}`}
-          {...register(`exercises.${index}.name`)}
-        />
-      </div>
+      <FormInput
+        type="text"
+        label="Name"
+        id={`exerciseName-${index}`}
+        fieldName={`exercises.${index}.name`}
+      />
       <div className="flex flex-col">
         <label htmlFor={`type-${index}`}>Type</label>
         <select
@@ -81,46 +72,39 @@ const ExerciseForm: React.FC<Props> = ({
             return (
               <div key={setIndex}>
                 <div className="flex space-x-2">
-                  <div className="flex flex-col">
-                    <label htmlFor={`weight-${index}`}>Weight</label>
-                    <Input
-                      id={`weight-${index}`}
-                      type="number"
-                      {...register(
-                        `exercises.${index}.sets.${setIndex}.weight`
-                      )}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor={`reps-${index}`}>Reps</label>
-                    <Input
-                      id={`reps-${index}`}
-                      type="number"
-                      {...register(`exercises.${index}.sets.${setIndex}.reps`)}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor={`restTime-${index}`}>Rest Time</label>
-                    <Input
-                      id={`restTime-${index}`}
-                      type="number"
-                      {...register(
-                        `exercises.${index}.sets.${setIndex}.restTime`
-                      )}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor={`failure-${index}`}>Failure</label>
-                    <Checkbox
-                      name={`exercises.${index}.sets.${setIndex}.failure`}
-                    />
-                  </div>
+                  <FormInput
+                    type="text"
+                    label="Weight"
+                    id={`weight-${index}`}
+                    fieldName={`exercises.${index}.sets.${setIndex}.weight`}
+                  />
+                  <FormInput
+                    type="text"
+                    label="Reps"
+                    id={`reps-${index}`}
+                    fieldName={`exercises.${index}.sets.${setIndex}.reps`}
+                  />
+                  <FormInput
+                    type="text"
+                    label="Rest time"
+                    id={`restTime-${index}`}
+                    fieldName={`exercises.${index}.sets.${setIndex}.restTime`}
+                  />
+                  <FormInput
+                    type="checkbox"
+                    label="Failure"
+                    id={`failure-${index}`}
+                    fieldName={`exercises.${index}.sets.${setIndex}.failure`}
+                  />
                   {fields.length > 1 && (
                     <IconButton
                       className="self-end"
                       icon="Close"
                       size={10}
-                      onClick={() => remove(setIndex)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        remove(setIndex);
+                      }}
                     />
                   )}
                 </div>
@@ -145,23 +129,19 @@ const ExerciseForm: React.FC<Props> = ({
         </div>
       )}
       {exerciseType === "cardio" && (
-        <div className="flex">
-          <div className="flex flex-col">
-            <label htmlFor={`distance-${index}`}>Distance</label>
-            <Input
-              id={`distance-${index}`}
-              type="number"
-              {...register(`exercises.${index}.distance`)}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor={`duration-${index}`}>Duration</label>
-            <Input
-              id={`duration-${index}`}
-              type="number"
-              {...register(`exercises.${index}.duration`)}
-            />
-          </div>
+        <div className="flex space-x-2">
+          <FormInput
+            type="text"
+            label="Distance"
+            id={`distance-${index}`}
+            fieldName={`exercises.${index}.distance`}
+          />
+          <FormInput
+            type="text"
+            label="Duration"
+            id={`duration-${index}`}
+            fieldName={`exercises.${index}.duration`}
+          />
         </div>
       )}
     </div>

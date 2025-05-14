@@ -10,7 +10,7 @@ interface Props extends Style {
   // Additional classes for styling
   className?: string;
   // Function to handle click events
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const IconButton: React.FC<Props> = ({ icon, size, className, onClick }) => {

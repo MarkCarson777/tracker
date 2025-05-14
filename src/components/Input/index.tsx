@@ -8,7 +8,6 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement>, Style {}
  */
 
 const Input: React.FC<Props> = ({
-  value,
   disabled = false,
   readOnly = false,
   className,
