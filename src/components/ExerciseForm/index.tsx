@@ -13,6 +13,7 @@ import {
 import { cn } from "../../utils/cn";
 // Types
 import { type Style } from "../../types/props";
+import Checkbox from "../Checkbox";
 
 interface Props extends Style {
   // The index of the exercise in the list
@@ -44,7 +45,7 @@ const ExerciseForm: React.FC<Props> = ({
   return (
     <div
       className={cn(
-        "bg-blue-200 border-4 border-blue-500 p-3 rounded flex flex-col",
+        "border-4 border-blue-500 p-3 rounded flex flex-col",
         className
       )}
     >
@@ -110,35 +111,37 @@ const ExerciseForm: React.FC<Props> = ({
                   </div>
                   <div className="flex flex-col">
                     <label htmlFor={`failure-${index}`}>Failure</label>
-                    <input
-                      type="checkbox"
-                      {...register(
-                        `exercises.${index}.sets.${setIndex}.failure`
-                      )}
+                    <Checkbox
+                      name={`exercises.${index}.sets.${setIndex}.failure`}
                     />
                   </div>
+                  {fields.length > 1 && (
+                    <IconButton
+                      className="self-end"
+                      icon="Close"
+                      size={10}
+                      onClick={() => remove(setIndex)}
+                    />
+                  )}
                 </div>
-                {fields.length > 1 && (
-                  <Button onClick={() => remove(setIndex)}>Remove</Button>
-                )}
-                {fields.length < 6 && (
-                  <Button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      append({
-                        reps: 0,
-                        weight: 0,
-                        restTime: 0,
-                        failure: false,
-                      });
-                    }}
-                  >
-                    Add set
-                  </Button>
-                )}
               </div>
             );
           })}
+          {fields.length < 6 && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                append({
+                  reps: 0,
+                  weight: 0,
+                  restTime: 0,
+                  failure: false,
+                });
+              }}
+            >
+              Add set
+            </Button>
+          )}
         </div>
       )}
       {exerciseType === "cardio" && (

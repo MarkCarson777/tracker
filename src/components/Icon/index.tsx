@@ -12,8 +12,6 @@ export interface IconProps {
   color?: string;
   // The size of the icon in pixels
   size?: number;
-  // The key-value pairs for additional props
-  [key: string]: any;
 }
 
 interface IconComponents {
