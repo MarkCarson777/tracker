@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { Button } from "../../components/Button";
+import { signOut } from "../../services/authService";
 
 export function HomePage() {
   // React Query fetch
@@ -15,6 +17,7 @@ export function HomePage() {
 
   return (
     <div>
+      <Button onClick={() => signOut()}>Sign out</Button>
       {/* React Query Data */}
       <h1>Data (React Query)</h1>
       {isLoading && <p>Loading...</p>}

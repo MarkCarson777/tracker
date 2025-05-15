@@ -3,6 +3,7 @@ import { auth } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut as firebaseSignOut,
   type User,
 } from "firebase/auth";
 
@@ -36,6 +37,16 @@ export const signUp = async (
     return userCredential.user;
   } catch (error) {
     console.error("Failed to sign up", error);
+    throw error;
+  }
+};
+
+export const signOut = async (): Promise<void> => {
+  try {
+    await firebaseSignOut(auth);
+    console.log("User signed out successfully");
+  } catch (error) {
+    console.error("Failed to sign out", error);
     throw error;
   }
 };
