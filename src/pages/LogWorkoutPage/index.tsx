@@ -3,6 +3,7 @@ import { Button } from "../../components/Button";
 import { ExerciseForm } from "../../components/ExerciseForm";
 import { FormInput } from "../../components/FormInput";
 // Firebase
+import { auth } from "../../firebase";
 import { addWorkout } from "../../services/workoutService";
 // Forms
 import { useForm, FormProvider, useFieldArray } from "react-hook-form";
@@ -48,9 +49,17 @@ export const LogWorkoutPage: React.FC = () => {
   // Function to save the workout
   const onSaveWorkout = async (data: Workout) => {
     try {
+      const userId = auth.currentUser?.uid;
+
+      // Check if user is logged in
+      if (!userId) {
+        console.error("User not authenticated");
+        return;
+      }
+
       const workoutData = {
         workoutName: data.workoutName,
-        userId: "testUserId",
+        userId: userId,
         date: new Date().toISOString(),
         exercises: data.exercises,
         notes: data.workoutNotes,
@@ -65,11 +74,6 @@ export const LogWorkoutPage: React.FC = () => {
   const onRemoveExercise = (index: number) => {
     remove(index);
   };
-
-  // Log any errors in the form state
-  if (Object.keys(formState.errors).length > 0) {
-    console.error("Workout submission errors", formState.errors);
-  }
 
   return (
     <FormProvider {...formMethods}>
