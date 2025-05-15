@@ -26,8 +26,8 @@ export function HomePage() {
         </div>
       )}
       {/* React Router Test */}
-      <Link to="/signIn">Go to sign in</Link>
-      <Link to="/logWorkout">Go to log workout</Link>
+      <Link to="/sign-in">Go to sign in</Link>
+      <Link to="/log-workout">Go to log workout</Link>
     </div>
   );
 }

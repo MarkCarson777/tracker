@@ -62,7 +62,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
         <Button>{formState.isSubmitting ? "Signing in..." : "Sign in"}</Button>
       </form>
       <span>Don't have an account?</span>
-      <Link to="/signUp">Create one</Link>
+      <Link to="/sign-up">Create one</Link>
     </FormProvider>
   );
 };
