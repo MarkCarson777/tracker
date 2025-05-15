@@ -38,7 +38,7 @@ const SignUpForm: React.FC<Props> = ({ className }) => {
       const user = await signUp(data.email, data.password);
       console.log("User created:", user);
 
-      navigate("/logWorkout");
+      navigate("/log-workout");
     } catch (error) {
       console.error("Sign-up error", error);
     }
@@ -71,9 +71,11 @@ const SignUpForm: React.FC<Props> = ({ className }) => {
           placeholder="Confirm your password..."
         />
         <Button>{formState.isSubmitting ? "Signing up..." : "Sign up"}</Button>
+      </form>
+      <div className="flex">
         <span>Already have an account?</span>
         <Link to="/sign-in">Sign in</Link>
-      </form>
+      </div>
     </FormProvider>
   );
 };

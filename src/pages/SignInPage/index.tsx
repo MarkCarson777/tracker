@@ -1,10 +1,13 @@
+// Components
 import { SignInForm } from "../../components/SignInForm";
+// Containers
+import { PageContainer } from "../../containers/PageContainer";
 
 const SignInPage: React.FC = () => {
   return (
-    <div>
+    <PageContainer>
       <SignInForm />
-    </div>
+    </PageContainer>
   );
 };
 

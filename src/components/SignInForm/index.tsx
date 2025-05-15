@@ -38,7 +38,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
       const user = await signIn(data.email, data.password);
       console.log("User signed in:", user);
 
-      navigate("/logWorkout");
+      navigate("/log-workout");
     } catch (error) {
       console.error("Sign-in error in component:", error);
     }
@@ -61,8 +61,10 @@ const SignInForm: React.FC<Props> = ({ className }) => {
         />
         <Button>{formState.isSubmitting ? "Signing in..." : "Sign in"}</Button>
       </form>
-      <span>Don't have an account?</span>
-      <Link to="/sign-up">Create one</Link>
+      <div className="flex">
+        <span>Don't have an account?</span>
+        <Link to="/sign-up">Create one</Link>
+      </div>
     </FormProvider>
   );
 };
