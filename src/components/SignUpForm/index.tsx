@@ -2,14 +2,14 @@
 import { Button } from "../../components/Button";
 import { FormInput } from "../../components/FormInput";
 // Firebase
-import { signIn } from "../../services/authService";
+import { signUp } from "../../services/authService";
 // Forms
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 // Routing
 import { Link, useNavigate } from "react-router-dom";
 // Types
-import { signInSchema, type SignIn } from "../../schemas/authSchema";
+import { signUpSchema, type SignUp } from "../../schemas/authSchema";
 // Utilities
 import { cn } from "../../utils/cn";
 
@@ -17,32 +17,37 @@ interface Props {
   className?: string;
 }
 
-const SignInForm: React.FC<Props> = ({ className }) => {
+const SignUpForm: React.FC<Props> = ({ className }) => {
   const navigate = useNavigate();
 
   // Form setup
-  const formMethods = useForm<SignIn>({
-    resolver: zodResolver(signInSchema),
+  const formMethods = useForm<SignUp>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
   // Destructure form methods
   const { handleSubmit, formState } = formMethods;
 
-  // Handle form submission
-  const onSubmit = async (data: SignIn) => {
+  const onSubmit = async (data: SignUp) => {
     try {
-      const user = await signIn(data.email, data.password);
-      console.log("User signed in:", user);
+      const user = await signUp(data.email, data.password);
+      console.log("User created:", user);
 
       navigate("/logWorkout");
     } catch (error) {
-      console.error("Sign-in error in component:", error);
+      console.error("Sign-up error", error);
     }
   };
+
+  console.log("Form state:", formState.errors);
+  // TODO: display passwords don't match error
+  // TODO: display email already in use error
+  // TODO: separate concerns of firebase errors and form validation errors
 
   return (
     <FormProvider {...formMethods}>
@@ -57,14 +62,20 @@ const SignInForm: React.FC<Props> = ({ className }) => {
           id="password"
           name="password"
           type="text"
-          placeholder="Enter your password..."
+          placeholder="Enter a new password..."
         />
-        <Button>{formState.isSubmitting ? "Signing in..." : "Sign in"}</Button>
+        <FormInput
+          id="confirmPassword"
+          name="confirmPassword"
+          type="text"
+          placeholder="Confirm your password..."
+        />
+        <Button>{formState.isSubmitting ? "Signing up..." : "Sign up"}</Button>
+        <span>Already have an account?</span>
+        <Link to="/signIn">Sign in</Link>
       </form>
-      <span>Don't have an account?</span>
-      <Link to="/signUp">Create one</Link>
     </FormProvider>
   );
 };
 
-export { SignInForm };
+export { SignUpForm };
