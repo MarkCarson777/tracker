@@ -7,6 +7,8 @@ import {
   updateDoc,
   deleteDoc,
   CollectionReference,
+  query,
+  where,
 } from "firebase/firestore";
 import type { Workout } from "../schemas/workoutSchema";
 
@@ -34,6 +36,27 @@ export const getWorkouts = async (): Promise<Workout[]> => {
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error("Error getting workouts: ", error);
+    throw error;
+  }
+};
+
+export const getUserWorkouts = async (userId: string): Promise<Workout[]> => {
+  if (!userId) {
+    return [];
+  }
+
+  const workoutsCollection = collection(db, "workouts");
+  const q = query(workoutsCollection, where("userId", "==", userId));
+
+  try {
+    const querySnapshot = await getDocs(q);
+    const workouts: Workout[] = [];
+    querySnapshot.forEach((doc) => {
+      workouts.push({ id: doc.id, ...doc.data() } as Workout);
+    });
+    return workouts;
+  } catch (error) {
+    console.error("Error fetching user workouts:", error);
     throw error;
   }
 };
