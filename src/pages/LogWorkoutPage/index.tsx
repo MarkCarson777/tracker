@@ -8,10 +8,14 @@ import { addWorkout } from "../../services/workoutService";
 // Forms
 import { useForm, FormProvider, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+// Routing
+import { useNavigate } from "react-router-dom";
 // Types
 import { type Workout, workoutSchema } from "../../schemas/workoutSchema";
 
 export const LogWorkoutPage: React.FC = () => {
+  const navigate = useNavigate();
+
   // Form setup
   const formMethods = useForm<Workout>({
     resolver: zodResolver(workoutSchema),
@@ -65,6 +69,7 @@ export const LogWorkoutPage: React.FC = () => {
         notes: data.workoutNotes,
       };
       await addWorkout(workoutData);
+      navigate("/");
     } catch (error) {
       console.error("Error saving workout:", error);
     }

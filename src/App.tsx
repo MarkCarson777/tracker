@@ -7,7 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 // Routing
 import { Navigate, Route, Routes } from "react-router-dom";
 // Pages
-import { HomePage } from "./pages/HomePage";
+import { WorkoutsPage } from "./pages/WorkoutsPage";
 import { LogWorkoutPage } from "./pages/LogWorkoutPage";
 import { SignInPage } from "./pages/SignInPage";
 import { SignUpPage } from "./pages/SignUpPage";
@@ -28,7 +28,7 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<WorkoutsPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route

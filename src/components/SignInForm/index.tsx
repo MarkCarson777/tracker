@@ -38,7 +38,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
       const user = await signIn(data.email, data.password);
       console.log("User signed in:", user);
 
-      navigate("/log-workout");
+      navigate("/");
     } catch (error) {
       console.error("Sign-in error in component:", error);
     }

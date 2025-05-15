@@ -40,7 +40,9 @@ export const getWorkouts = async (): Promise<Workout[]> => {
   }
 };
 
-export const getUserWorkouts = async (userId: string): Promise<Workout[]> => {
+export const getUserWorkouts = async (
+  userId: string | undefined
+): Promise<Workout[]> => {
   if (!userId) {
     return [];
   }
