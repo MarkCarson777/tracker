@@ -1,20 +1,19 @@
+// Components
+import { AuthRoute } from "./components/AuthRoute";
 // React
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// Hooks
-import { useAuth } from "./hooks/useAuth";
 // Routing
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 // Pages
 import { WorkoutsPage } from "./pages/WorkoutsPage";
 import { LogWorkoutPage } from "./pages/LogWorkoutPage";
 import { SignInPage } from "./pages/SignInPage";
 import { SignUpPage } from "./pages/SignUpPage";
+import { WorkoutRecordPage } from "./pages/WorkoutRecordPage";
 
 const queryClient = new QueryClient();
 
 export function App() {
-  const { isAuthenticated } = useAuth();
-
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
@@ -24,7 +23,17 @@ export function App() {
         <Route
           path="/log-workout"
           element={
-            isAuthenticated ? <LogWorkoutPage /> : <Navigate to="/sign-in" />
+            <AuthRoute>
+              <LogWorkoutPage />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="/workout-record/:workoutId"
+          element={
+            <AuthRoute>
+              <WorkoutRecordPage />
+            </AuthRoute>
           }
         />
       </Routes>
