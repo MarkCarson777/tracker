@@ -1,4 +1,4 @@
-import { Navigate, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import type React from "react";
 
@@ -6,14 +6,10 @@ interface Props {
   children: React.ReactNode;
 }
 
-const AuthRoute: React.FC<Props> = ({ children, ...rest }) => {
+const AuthRoute: React.FC<Props> = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
-  return isAuthenticated ? (
-    <Route {...rest} element={children} />
-  ) : (
-    <Navigate to="/sign-in" replace />
-  );
+  return isAuthenticated ? <>{children}</> : <Navigate to="/sign-in" replace />;
 };
 
 export { AuthRoute };

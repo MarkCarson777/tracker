@@ -67,7 +67,9 @@ const WorkoutsPage: React.FC = () => {
         <h2>Your Workouts</h2>
         <ul>
           {workouts.map((workout) => (
-            <li key={workout.id}>{workout.workoutName}</li>
+            <Link to={`/workout-record/${workout.id}`} key={workout.id}>
+              {workout.workoutName}
+            </Link>
           ))}
         </ul>
       </div>
