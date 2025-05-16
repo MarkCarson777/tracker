@@ -26,15 +26,6 @@ const WorkoutsPage: React.FC = () => {
     enabled: !!user?.uid,
   });
 
-  if (!user) {
-    return (
-      <>
-        <div>Please sign in to view your workouts.</div>
-        <Link to="/sign-in">Go to sign in</Link>
-      </>
-    );
-  }
-
   if (isLoading) {
     return <div>Loading workouts...</div>;
   }

@@ -9,6 +9,7 @@ import {
   CollectionReference,
   query,
   where,
+  getDoc,
 } from "firebase/firestore";
 import type { Workout } from "../schemas/workoutSchema";
 
@@ -36,6 +37,25 @@ export const getWorkouts = async (): Promise<Workout[]> => {
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error("Error getting workouts: ", error);
+    throw error;
+  }
+};
+
+export const getUserWorkout = async (
+  workoutId: string
+): Promise<Workout | undefined> => {
+  try {
+    const workoutDocRef = doc(db, "workouts", workoutId);
+    const workoutDocSnap = await getDoc(workoutDocRef);
+
+    if (workoutDocSnap.exists()) {
+      return { id: workoutDocSnap.id, ...workoutDocSnap.data() } as Workout;
+    } else {
+      console.log(`Workout: ${workoutId} not found.`);
+      return undefined;
+    }
+  } catch (error) {
+    console.error(`Error fetching workout ${workoutId}:`, error);
     throw error;
   }
 };
