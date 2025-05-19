@@ -14,8 +14,6 @@ const WorkoutRecordPage: React.FC = () => {
     queryFn: () => getUserWorkout(workoutId ? workoutId : ""),
   });
 
-  console.log("data", workout);
-
   if (isLoading) {
     return <div>Loading workout...</div>;
   }

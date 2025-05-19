@@ -35,13 +35,12 @@ const ExerciseForm: React.FC<Props> = ({
   const exerciseType = useWatch({ name: `exercises.${index}.type` });
 
   return (
-    <div className={cn(" bg-gray-100 p-3 rounded flex flex-col", className)}>
-      <IconButton
-        className="self-end"
-        icon="Close"
-        size={10}
-        onClick={() => onRemoveExercise(index)}
-      />
+    <div
+      className={cn(
+        "bg-gray-100 p-3 rounded-lg flex flex-col space-y-2",
+        className
+      )}
+    >
       <FormInput
         type="text"
         label="Name"
@@ -122,6 +121,16 @@ const ExerciseForm: React.FC<Props> = ({
               Add set
             </Button>
           )}
+          {fields.length > 1 && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+                onRemoveExercise(index);
+              }}
+            >
+              Remove exercise
+            </Button>
+          )}
         </div>
       )}
       {exerciseType === "cardio" && (
@@ -131,12 +140,14 @@ const ExerciseForm: React.FC<Props> = ({
             label="Distance"
             id={`distance-${index}`}
             name={`exercises.${index}.distance`}
+            placeholder="Distance"
           />
           <FormInput
             type="number"
             label="Duration"
             id={`duration-${index}`}
             name={`exercises.${index}.duration`}
+            placeholder="Duration"
           />
         </div>
       )}

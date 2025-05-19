@@ -82,7 +82,7 @@ export const LogWorkoutPage: React.FC = () => {
 
   return (
     <FormProvider {...formMethods}>
-      <div className="m-10 space-y-4">
+      <div className="h-svh p-10">
         <form onSubmit={handleSubmit(onSaveWorkout)}>
           <FormInput
             id="workoutName"
