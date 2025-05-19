@@ -16,7 +16,7 @@ interface Props extends Style {
   // Label for input element
   label?: string;
   // Type of input element
-  type: "text" | "number" | "textarea" | "checkbox";
+  type: "text" | "number" | "select" | "textarea" | "checkbox";
   // Placeholder for input element
   placeholder?: string;
 }

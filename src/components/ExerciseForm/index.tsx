@@ -8,6 +8,7 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { type Style } from "../../types/props";
 // Utilities
 import { cn } from "../../utils/cn";
+import { Select } from "../Select";
 
 interface Props extends Style {
   // The index of the exercise in the list
@@ -22,7 +23,7 @@ const ExerciseForm: React.FC<Props> = ({
   className,
 }) => {
   // Destructure form methods from useFormContext
-  const { register, control } = useFormContext();
+  const { control, setValue } = useFormContext();
 
   // Use useFieldArray to manage the sets for this exercise
   const { fields, append, remove } = useFieldArray({
@@ -48,17 +49,16 @@ const ExerciseForm: React.FC<Props> = ({
         name={`exercises.${index}.name`}
         placeholder="Enter an exercise name..."
       />
-      <div className="flex flex-col">
-        <label htmlFor={`type-${index}`}>Type</label>
-        <select
-          className="border"
-          id={`type-${index}`}
-          {...register(`exercises.${index}.type`)}
-        >
-          <option value="weights">Weights</option>
-          <option value="cardio">Cardio</option>
-        </select>
-      </div>
+      <Select
+        options={[
+          { value: "weights", label: "Weights" },
+          { value: "cardio", label: "Cardio" },
+        ]}
+        value={exerciseType}
+        onChange={(value) => {
+          setValue(`exercises.${index}.type`, value);
+        }}
+      />
       {exerciseType === "weights" && (
         <div>
           {fields.map((set, setIndex) => {
