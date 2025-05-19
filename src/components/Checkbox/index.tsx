@@ -16,9 +16,9 @@ const Checkbox: React.FC<Props> = ({ name }) => {
 
   return (
     <label>
-      <input type="checkbox" {...register(name)} className="sr-only" />
-      <div className="flex items-center justify-center size-5 rounded border border-gray-400">
-        {isChecked && <Icon icon="Check" size={14} color="#FFFFFF" />}
+      <input type="checkbox" {...register(name)} className="peer sr-only" />
+      <div className="flex items-center justify-center size-5 rounded border-2 border-[#2A2A2A] peer-checked:bg-[#2A2A2A]">
+        {isChecked && <Icon icon="Check" size={14} color="#E6FEAD" />}
       </div>
     </label>
   );
