@@ -50,7 +50,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
     <FormProvider {...formMethods}>
       <form
         className={cn(
-          "bg-[#E6FEAD] py-10 px-6 rounded-3xl min-w-[560px] drop-shadow-2xl",
+          "bg-[#E6FEAD] py-10 px-6 rounded-3xl min-w-[560px] min-h-[640px] drop-shadow-2xl flex flex-col items-center space-y-2",
           className
         )}
         onSubmit={handleSubmit(onSubmit)}
@@ -72,7 +72,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
         <Button variant="primary">
           {formState.isSubmitting ? "Signing in..." : "Sign in"}
         </Button>
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between py-2">
           <div className="flex items-center space-x-2">
             <Checkbox name="remember" />
             <span>Remember me</span>
@@ -91,7 +91,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
             <span>Facebook</span>
           </Button>
         </div>
-        <div className="flex space-x-1">
+        <div className="flex space-x-1 mt-auto">
           <span>Don't have an account?</span>
           <Link className="font-semibold" to="/sign-up">
             Register

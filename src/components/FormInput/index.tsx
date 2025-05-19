@@ -28,7 +28,7 @@ const FormInput: React.FC<Props> = ({ id, name, label, type, placeholder }) => {
   const error = get(errors, name);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {label && (
         <label className="text-xs mb-1" htmlFor={id}>
           {label}
