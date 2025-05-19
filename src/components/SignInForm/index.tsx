@@ -77,7 +77,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
             <Checkbox name="remember" />
             <span>Remember me</span>
           </div>
-          <Link className="font-semibold" to="/sign-up">
+          <Link className="font-semibold hover:underline" to="/sign-up">
             Forgot password?
           </Link>
         </div>
@@ -106,7 +106,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
         </div>
         <div className="flex space-x-1 mt-auto">
           <span>Don't have an account?</span>
-          <Link className="font-semibold" to="/sign-up">
+          <Link className="font-semibold hover:underline" to="/sign-up">
             Register
           </Link>
         </div>

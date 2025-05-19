@@ -108,6 +108,7 @@ const ExerciseForm: React.FC<Props> = ({
           })}
           {fields.length < 6 && (
             <Button
+              variant="primary"
               onClick={(e) => {
                 e.preventDefault();
                 append({
@@ -123,6 +124,7 @@ const ExerciseForm: React.FC<Props> = ({
           )}
           {fields.length > 1 && (
             <Button
+              variant="primary"
               onClick={(e) => {
                 e.preventDefault();
                 onRemoveExercise(index);

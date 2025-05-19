@@ -70,7 +70,9 @@ const SignUpForm: React.FC<Props> = ({ className }) => {
           type="text"
           placeholder="Confirm your password..."
         />
-        <Button>{formState.isSubmitting ? "Signing up..." : "Sign up"}</Button>
+        <Button variant="primary">
+          {formState.isSubmitting ? "Signing up..." : "Sign up"}
+        </Button>
       </form>
       <div className="flex">
         <span>Already have an account?</span>

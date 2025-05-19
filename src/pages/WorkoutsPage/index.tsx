@@ -38,6 +38,7 @@ const WorkoutsPage: React.FC = () => {
     return (
       <>
         <Button
+          variant="primary"
           onClick={() => {
             signOut();
             navigate("/sign-in");

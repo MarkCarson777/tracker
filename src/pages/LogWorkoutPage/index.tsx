@@ -103,6 +103,7 @@ export const LogWorkoutPage: React.FC = () => {
             })}
           </div>
           <Button
+            variant="primary"
             onClick={(e) => {
               e.preventDefault();
               onAddExercise();
@@ -119,7 +120,7 @@ export const LogWorkoutPage: React.FC = () => {
               placeholder="Add some notes..."
             />
           </div>
-          <Button>
+          <Button variant="primary">
             {formState.isSubmitting ? "Saving..." : "Save workout"}
           </Button>
         </form>
