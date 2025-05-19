@@ -19,10 +19,10 @@ const Button: React.FC<Props> = ({
     <button
       {...props}
       className={cn(
-        "w-full font-semibold py-2 px-3 rounded-lg flex items-center justify-center space-x-2",
-        variant === "primary" && "bg-[#2A2A2A] text-[#E6FEAD]",
+        "w-full font-semibold h-10 px-3 rounded-lg flex items-center justify-center space-x-2 cursor-pointer",
+        variant === "primary" && "bg-[#2A2A2A] text-[#E6FEAD] hover:bg-black",
         variant === "secondary" &&
-          "bg-white text-[#2A2A2A] border-2 border-[#2A2A2A]",
+          "bg-white text-[#2A2A2A] border-2 border-[#2A2A2A] hover:bg-gray-50",
         className
       )}
     >

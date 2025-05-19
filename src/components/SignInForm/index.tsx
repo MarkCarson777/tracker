@@ -1,8 +1,10 @@
 // Components
 import { Button } from "../../components/Button";
+import { Checkbox } from "../Checkbox";
 import { FormInput } from "../../components/FormInput";
+import { Icon } from "../Icon";
 // Firebase
-import { signIn } from "../../services/authService";
+import { signIn, signInWithGoogle } from "../../services/authService";
 // Forms
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,8 +14,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInSchema, type SignIn } from "../../schemas/authSchema";
 // Utilities
 import { cn } from "../../utils/cn";
-import { Icon } from "../Icon";
-import { Checkbox } from "../Checkbox";
 
 interface Props {
   className?: string;
@@ -82,7 +82,20 @@ const SignInForm: React.FC<Props> = ({ className }) => {
           </Link>
         </div>
         <div className="flex w-full space-x-2">
-          <Button variant="secondary">
+          <Button
+            variant="secondary"
+            onClick={(e) => {
+              e.preventDefault();
+              signInWithGoogle()
+                .then((user) => {
+                  console.log("User signed in with Google:", user);
+                  navigate("/");
+                })
+                .catch((error) => {
+                  console.error("Google Sign-in error:", error);
+                });
+            }}
+          >
             <Icon icon="Google" size={20} />
             <span>Google</span>
           </Button>
