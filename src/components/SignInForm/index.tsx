@@ -5,6 +5,12 @@ import { FormInput } from "../../components/FormInput";
 import { Icon } from "../Icon";
 // Firebase
 import { signIn, signInWithGoogle } from "../../services/authService";
+import { auth } from "../../firebase";
+import {
+  browserLocalPersistence,
+  browserSessionPersistence,
+  setPersistence,
+} from "firebase/auth";
 // Forms
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,6 +34,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
     defaultValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
   });
 
@@ -36,6 +43,16 @@ const SignInForm: React.FC<Props> = ({ className }) => {
 
   // Handle form submission
   const onSubmit = async (data: SignIn) => {
+    const rememberUser = data.rememberMe || false;
+
+    if (rememberUser) {
+      await setPersistence(auth, browserLocalPersistence);
+      console.log("Session persistence set to LOCAL");
+    } else {
+      await setPersistence(auth, browserSessionPersistence);
+      console.log("Session persistence set to SESSION");
+    }
+
     try {
       const user = await signIn(data.email, data.password);
       console.log("User signed in:", user);
@@ -74,7 +91,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
         </Button>
         <div className="flex w-full items-center justify-between py-2">
           <div className="flex items-center space-x-2">
-            <Checkbox name="remember" />
+            <Checkbox name="rememberMe" />
             <span>Remember me</span>
           </div>
           <Link className="font-semibold hover:underline" to="/sign-up">

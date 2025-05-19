@@ -54,7 +54,13 @@ const WorkoutsPage: React.FC = () => {
 
   return (
     <div>
-      <Button variant="primary" onClick={() => signOut()}>
+      <Button
+        variant="primary"
+        onClick={() => {
+          signOut();
+          navigate("/sign-in");
+        }}
+      >
         Sign out
       </Button>
       <div>
