@@ -46,25 +46,38 @@ const SignInForm: React.FC<Props> = ({ className }) => {
 
   return (
     <FormProvider {...formMethods}>
-      <form className={cn(className)} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={cn(
+          "bg-[#E6FEAD] py-10 px-6 rounded-3xl min-w-[560px] drop-shadow-2xl",
+          className
+        )}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <span className="font-semibold w-full">Sign in to continue</span>
         <FormInput
           id="email"
           name="email"
           type="text"
-          placeholder="Enter your email..."
+          placeholder="Email address"
         />
         <FormInput
           id="password"
           name="password"
           type="text"
-          placeholder="Enter your password..."
+          placeholder="Password"
         />
         <Button>{formState.isSubmitting ? "Signing in..." : "Sign in"}</Button>
+        <div className="flex w-full space-x-2">
+          <Button>Google</Button>
+          <Button>Facebook</Button>
+        </div>
+        <div className="flex space-x-1">
+          <span>Don't have an account?</span>
+          <Link className="font-semibold" to="/sign-up">
+            Register
+          </Link>
+        </div>
       </form>
-      <div className="flex">
-        <span>Don't have an account?</span>
-        <Link to="/sign-up">Create one</Link>
-      </div>
     </FormProvider>
   );
 };

@@ -4,6 +4,8 @@ import Check from "./icons/check.svg?react";
 import ChevronDown from "./icons/chevronDown.svg?react";
 import ChevronUp from "./icons/chevronUp.svg?react";
 import Close from "./icons/close.svg?react";
+import Facebook from "./icons/facebook.svg?react";
+import Google from "./icons/google.svg?react";
 import Trash from "./icons/trash.svg?react";
 import Warning from "./icons/warning.svg?react";
 
@@ -25,6 +27,8 @@ const icons: IconComponents = {
   ChevronDown,
   ChevronUp,
   Close,
+  Facebook,
+  Google,
   Trash,
   Warning,
 };
