@@ -1,6 +1,8 @@
 import type { ReactElement } from "react";
 
 import Check from "./icons/check.svg?react";
+import ChevronDown from "./icons/chevronDown.svg?react";
+import ChevronUp from "./icons/chevronUp.svg?react";
 import Close from "./icons/close.svg?react";
 import Trash from "./icons/trash.svg?react";
 import Warning from "./icons/warning.svg?react";
@@ -20,6 +22,8 @@ interface IconComponents {
 
 const icons: IconComponents = {
   Check,
+  ChevronDown,
+  ChevronUp,
   Close,
   Trash,
   Warning,
