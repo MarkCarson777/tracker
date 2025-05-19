@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { cn } from "../../utils/cn";
+import type { Style } from "../../types/props";
 
-interface Props {
+interface Props extends Style {
   options: {
     label: string;
     value: string;
@@ -9,7 +11,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-const Select: React.FC<Props> = ({ value, options, onChange }) => {
+const Select: React.FC<Props> = ({ value, options, className, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
   const [selectedLabel, setSelectedLabel] = useState(
@@ -28,14 +30,14 @@ const Select: React.FC<Props> = ({ value, options, onChange }) => {
   };
 
   return (
-    <div>
+    <div className={cn("w-full", className)}>
       <div onClick={onToggleOpen}>
         {selectedLabel}
         <span>▼</span>
       </div>
 
       {isOpen && (
-        <ul className="options-list">
+        <ul>
           {options.map((option) => (
             <li
               key={option.value}
