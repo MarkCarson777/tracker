@@ -12,6 +12,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInSchema, type SignIn } from "../../schemas/authSchema";
 // Utilities
 import { cn } from "../../utils/cn";
+import { Icon } from "../Icon";
+import { Checkbox } from "../Checkbox";
 
 interface Props {
   className?: string;
@@ -53,6 +55,7 @@ const SignInForm: React.FC<Props> = ({ className }) => {
         )}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <img src="src/assets/logo.svg" alt="Logo" className="mb-4" />
         <span className="font-semibold w-full">Sign in to continue</span>
         <FormInput
           id="email"
@@ -66,10 +69,27 @@ const SignInForm: React.FC<Props> = ({ className }) => {
           type="text"
           placeholder="Password"
         />
-        <Button>{formState.isSubmitting ? "Signing in..." : "Sign in"}</Button>
+        <Button variant="primary">
+          {formState.isSubmitting ? "Signing in..." : "Sign in"}
+        </Button>
+        <div className="flex w-full items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Checkbox name="remember" />
+            <span>Remember me</span>
+          </div>
+          <Link className="font-semibold" to="/sign-up">
+            Forgot password?
+          </Link>
+        </div>
         <div className="flex w-full space-x-2">
-          <Button>Google</Button>
-          <Button>Facebook</Button>
+          <Button variant="secondary">
+            <Icon icon="Google" size={20} />
+            <span>Google</span>
+          </Button>
+          <Button variant="secondary">
+            <Icon icon="Facebook" size={20} />
+            <span>Facebook</span>
+          </Button>
         </div>
         <div className="flex space-x-1">
           <span>Don't have an account?</span>
