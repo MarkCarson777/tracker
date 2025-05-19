@@ -34,12 +34,7 @@ const ExerciseForm: React.FC<Props> = ({
   const exerciseType = useWatch({ name: `exercises.${index}.type` });
 
   return (
-    <div
-      className={cn(
-        "border-2 border-blue-500 p-3 rounded flex flex-col",
-        className
-      )}
-    >
+    <div className={cn(" bg-gray-100 p-3 rounded flex flex-col", className)}>
       <IconButton
         className="self-end"
         icon="Close"

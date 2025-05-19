@@ -1,7 +1,7 @@
 // Components
 import { Icon } from "../Icon";
 // Forms
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 // Types
 import type { Style } from "../../types/props";
 
@@ -11,13 +11,14 @@ interface Props extends Style {
 }
 
 const Checkbox: React.FC<Props> = ({ name }) => {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
+  const isChecked = useWatch({ control, name });
 
   return (
     <label>
-      <input type="checkbox" {...register(name)} className="sr-only peer" />
-      <div className="flex items-center justify-center size-5 rounded border border-gray-400 peer-checked:bg-blue-500 peer-checked:border-blue-500">
-        <Icon icon="Check" size={14} color="#FFFFFF" />
+      <input type="checkbox" {...register(name)} className="sr-only" />
+      <div className="flex items-center justify-center size-5 rounded border border-gray-400">
+        {isChecked && <Icon icon="Check" size={14} color="#FFFFFF" />}
       </div>
     </label>
   );

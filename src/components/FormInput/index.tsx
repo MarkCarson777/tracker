@@ -29,7 +29,11 @@ const FormInput: React.FC<Props> = ({ id, name, label, type, placeholder }) => {
 
   return (
     <div className="flex flex-col">
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && (
+        <label className="text-xs mb-1" htmlFor={id}>
+          {label}
+        </label>
+      )}
       {type === "text" && (
         <Input id={id} placeholder={placeholder} {...register(name)} />
       )}
