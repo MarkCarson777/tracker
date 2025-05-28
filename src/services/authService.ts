@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signOut as firebaseSignOut,
   type User,
+  FacebookAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
 
@@ -22,6 +23,21 @@ export const signIn = async (
     return userCredential.user;
   } catch (error) {
     console.error("Failed to sign in", error);
+    throw error;
+  }
+};
+
+export const signInWithFacebook = async (): Promise<User> => {
+  const provider = new FacebookAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    const credential = FacebookAuthProvider.credentialFromResult(result);
+    const accessToken = credential?.accessToken;
+    console.log("Facebook Access Token:", accessToken);
+    return user;
+  } catch (error) {
+    console.error("Facebook Sign-in Error:", error);
     throw error;
   }
 };

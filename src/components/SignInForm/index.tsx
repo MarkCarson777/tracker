@@ -4,7 +4,11 @@ import { Checkbox } from "../Checkbox";
 import { FormInput } from "../../components/FormInput";
 import { Icon } from "../Icon";
 // Firebase
-import { signIn, signInWithGoogle } from "../../services/authService";
+import {
+  signIn,
+  signInWithFacebook,
+  signInWithGoogle,
+} from "../../services/authService";
 import { auth } from "../../firebase";
 import {
   browserLocalPersistence,
@@ -116,7 +120,20 @@ const SignInForm: React.FC<Props> = ({ className }) => {
             <Icon icon="Google" size={20} />
             <span>Google</span>
           </Button>
-          <Button variant="secondary">
+          <Button
+            variant="secondary"
+            onClick={(e) => {
+              e.preventDefault();
+              signInWithFacebook()
+                .then((user) => {
+                  console.log("User signed in with Facebook:", user);
+                  navigate("/");
+                })
+                .catch((error) => {
+                  console.error("Facebook Sign-in error:", error);
+                });
+            }}
+          >
             <Icon icon="Facebook" size={20} />
             <span>Facebook</span>
           </Button>
